@@ -1,0 +1,39 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TestSc : MonoBehaviour
+{
+    
+    void TestFunction()
+    {
+        print("test1");
+        print("test2");
+    }
+    
+    void Start()
+    {
+        TestFunction();
+    }
+
+}
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TestSc2 : MonoBehaviour
+{
+    
+    void TestFunc(int a)
+    {
+        int num = 7;
+        print(a + num);
+    }
+    
+    void Start()
+    {
+        TestFunc(12);
+    }
+
+}
