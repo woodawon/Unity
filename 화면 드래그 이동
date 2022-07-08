@@ -1,0 +1,74 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class TouchTest : MonoBehaviour
+{
+    public Text testText;
+    public Text speedText;
+    public Text valueText;
+    public Slider speedSlider;
+    public InputField input;
+    public float speed;
+    public float value;
+    void Start()
+    {
+        value = 0.5f;
+    }
+
+    void Update()
+    {
+        speed = speedSlider.value * 1000;
+        speedText.text = speed.ToString();
+        valueText.text = value.ToString();
+
+        if (Input.touchCount >= 1)
+        {
+            Touch touch = Input.GetTouch(0);
+            Vector2 touchDeltaPosition = touch.deltaPosition;
+            float maxX, maxY;
+
+            if (touchDeltaPosition.x < 0)
+                maxX = -touchDeltaPosition.x;
+            else
+                maxX = touchDeltaPosition.x;
+
+            if (touchDeltaPosition.y < 0)
+                maxY = -touchDeltaPosition.y;
+            else
+                maxY = touchDeltaPosition.y;
+
+            if ((maxX >= value || maxY >= value) && touch.phase == TouchPhase.Ended)
+            {
+                if (maxX > maxY)
+                {
+                    if (touchDeltaPosition.x < 0)
+                        maxX = -1;
+                    else
+                        maxX = 1;
+
+                    maxY = 0;
+                }
+                else
+                {
+                    if (touchDeltaPosition.y < 0)
+                        maxY = -1;
+                    else
+                        maxY = 1;
+
+                    maxX = 0;
+                }
+
+                GetComponent<Rigidbody2D>().AddForce(new Vector2(maxX, maxY) * speed);
+            }
+
+            testText.text = touchDeltaPosition.ToString();
+        }
+    }
+
+    public void OnValueChange()
+    {
+        float.TryParse(input.text, out value);
+    }
+}
