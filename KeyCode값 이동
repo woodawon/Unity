@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class move : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    public float speed = 5f; // speed는 float형 5임을 선언.
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.A)) // Getkey를 Input할거고, KeyCode값으로 A가 눌렸다면
+        {
+            transform.Translate(-speed * Time.deltaTime, 0, 0); // (0,0)의 기본 좌표값으로부터 A키를 누르는 시간만큼 -speed처리로 프레임이 보이게 함
+        }
+        else if (Input.GetKey(KeyCode.D)) // Getkey를 Input할거고, KeyCode값으로 D가 눌렸다면
+        {
+            transform.Translate(speed * Time.deltaTime, 0, 0); // (0,0)의 기본 좌표값으로부터 D키를 누르는 시간만큼 +speed처리로 프레임이 보이게 함
+        }
+        else if (Input.GetKey(KeyCode.W)) // Getkey를 Input할거고, KeyCode값으로 W가 눌렸다면
+        {
+            transform.Translate(0, 0, speed * Time.deltaTime); // (0,0)의 기본 좌표값으로부터 W키를 누르는 시간만큼 +speed처리로 프레임이 보이게 함
+        }
+        else if (Input.GetKey(KeyCode.S)) // Getkey를 Input할거고, KeyCode값으로 S가 눌렸다면
+        {
+            transform.Translate(0, 0, -speed * Time.deltaTime); // (0,0)의 기본 좌표값으로부터 S키를 누르는 시간만큼 -speed처리로 프레임이 보이게 함
+        }
+    }
+}
