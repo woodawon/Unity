@@ -5,31 +5,32 @@ using UnityEngine.UI;
 
 public class TouchTest : MonoBehaviour
 {
-    public Text testText;
-    public Text speedText;
-    public Text valueText;
-    public Slider speedSlider;
-    public InputField input;
-    public float speed;
+    public Text testText; // testText는 Text임을 미리 선언
+    public Text speedText; // speedText도 Text임을 미리 선언
+    public Text valueText; // valueText도 Text임을 미리 선언
+    public Slider speedSlider; // Slider는 speedSlider로 부를 것임을 미리 선언
+    public InputField input; // 몰루
+    public float speed; 
     public float value;
     void Start()
     {
-        value = 0.5f;
+        value = 0.5f; // 앞으로 사용할 value값을 0.5f로 함.
     }
 
     void Update()
     {
-        speed = speedSlider.value * 1000;
-        speedText.text = speed.ToString();
-        valueText.text = value.ToString();
+        speed = speedSlider.value * 1000; // Slider의 speed value값에 * 1000을 하여 speed 지정함.
+        speedText.text = speed.ToString(); // speed값을 문자열로 받음.
+        valueText.text = value.ToString(); // vaule값을 문자열로 받음.
 
-        if (Input.touchCount >= 1)
+        if (Input.touchCount >= 1) // 터치가 >= 1로 무조껀 발생 했다면.
         {
-            Touch touch = Input.GetTouch(0);
-            Vector2 touchDeltaPosition = touch.deltaPosition;
+            Touch touch = Input.GetTouch(0); // 터치 순서값 상태를 touch한 값으로 반환함.
+            Vector2 touchDeltaPosition = touch.deltaPosition; // touch의 순서 위치값은 터치하는 순서대로 배열처리함.
             float maxX, maxY;
 
-            if (touchDeltaPosition.x < 0)
+            // 터치한 위치의 좌표값에 따라 -,+ 좌표 위치 주기
+            if (touchDeltaPosition.x < 0) 
                 maxX = -touchDeltaPosition.x;
             else
                 maxX = touchDeltaPosition.x;
@@ -39,36 +40,38 @@ public class TouchTest : MonoBehaviour
             else
                 maxY = touchDeltaPosition.y;
 
-            if ((maxX >= value || maxY >= value) && touch.phase == TouchPhase.Ended)
+            // 터치가 끝난 상태라면 touchDeltaPosition인 터치에 따라 maxX,maxY의 정확한 값 주기
+            if ((maxX >= value || maxY >= value) && touch.phase == TouchPhase.Ended) 
             {
-                if (maxX > maxY)
+                if (maxX > maxY) 
                 {
-                    if (touchDeltaPosition.x < 0)
+                    if (touchDeltaPosition.x < 0) // 좌표가 -일 때 -1하기
                         maxX = -1;
                     else
-                        maxX = 1;
+                        maxX = 1; // 좌표가 +일 때 +1하기
 
                     maxY = 0;
                 }
-                else
+                else 
                 {
-                    if (touchDeltaPosition.y < 0)
+                    if (touchDeltaPosition.y < 0) // 좌표가 -일 때 -1하기
                         maxY = -1;
                     else
-                        maxY = 1;
+                        maxY = 1; // 좌표가 +일 때 +1하기
 
                     maxX = 0;
                 }
 
-                GetComponent<Rigidbody2D>().AddForce(new Vector2(maxX, maxY) * speed);
+                // 2D body에 Veter2의 배열값의 좌표로 (maxX,maxY)가 x,y값으로 들어가고, 이 좌표값이 speed값과 곱해져 구현됨
+                GetComponent<Rigidbody2D>().AddForce(new Vector2(maxX, maxY) * speed); 
             }
 
-            testText.text = touchDeltaPosition.ToString();
+            testText.text = touchDeltaPosition.ToString(); // touchDeltaPosition으로 터치한 위치를 문자열로 받음
         }
     }
 
     public void OnValueChange()
     {
-        float.TryParse(input.text, out value);
+        float.TryParse(input.text, out value); // 문자열로 받은 touchDeltaPosition을 숫자값으로 나타내어 유효한 숫자인지 체크.
     }
 }
