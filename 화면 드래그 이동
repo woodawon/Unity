@@ -9,7 +9,7 @@ public class TouchTest : MonoBehaviour
     public Text speedText; // speedText도 Text임을 미리 선언
     public Text valueText; // valueText도 Text임을 미리 선언
     public Slider speedSlider; // Slider는 speedSlider로 부를 것임을 미리 선언
-    public InputField input; // 몰루
+    public InputField input; // 화면 민감도 설정(아직 )
     public float speed; 
     public float value;
     void Start()
